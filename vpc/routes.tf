@@ -24,9 +24,11 @@ resource "aws_route_table" "route" {
   }
 }
 
-#resource "aws_route" "r" {
-#  route_table_id            = aws_route_table.route.id
-#  destination_cidr_block    = var.DEFAULT_VPC_CIDR
+#resource "aws_route" "route-from-default-vpc" {
+#  count                     = length(data.aws_route_tables.default-vpc-routes.ids)
+#  route_table_id            = element(data.aws_route_tables.default-vpc-routes.ids, count.index)
+#  destination_cidr_block    = [for s in var.list : upper(s)]
 #  vpc_peering_connection_id = aws_vpc_peering_connection.peer.id
+#  depends_on                = [aws_route_table.route]
 #}
 
