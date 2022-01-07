@@ -24,11 +24,10 @@ resource "aws_route_table" "route" {
   }
 }
 
-#resource "aws_route" "route-from-default-vpc" {
-#  count                     = length(data.aws_route_tables.default-vpc-routes.ids)
-#  route_table_id            = element(data.aws_route_tables.default-vpc-routes.ids, count.index)
-#  destination_cidr_block    = [for s in var.list : upper(s)]
-#  vpc_peering_connection_id = aws_vpc_peering_connection.peer.id
-#  depends_on                = [aws_route_table.route]
-#}
+resource "aws_route" "route-from-default-vpc" {
+  count                     = length(local.association-list)
+  route_table_id            = tomap(element(local.association-list, count.index))["route_table"]
+  destination_cidr_block    = tomap(element(local.association-list, count.index))["cidr"]
+  vpc_peering_connection_id = aws_vpc_peering_connection.peer.id
+}
 
