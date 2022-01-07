@@ -3,10 +3,6 @@ locals {
   ALL_VPC_CIDR  = concat(local.VPC_CIDR_MAIN, var.VPC_CIDR_ADDON)
 }
 
-output "ALL_VPC_CIDR" {
-  value = [for s in local.ALL_VPC_CIDR : "CIDR = ${s}"]
-}
-
 locals {
   association-list = flatten([
     for cidr in local.ALL_VPC_CIDR : [
@@ -18,6 +14,4 @@ locals {
   ])
 }
 
-output "sample" {
-  value = tomap(element(local.association-list, 0))["cidr"]
-}
+
