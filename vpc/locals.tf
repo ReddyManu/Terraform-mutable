@@ -4,5 +4,5 @@ locals {
 }
 
 output "ALL_VPC_CIDR" {
-  value = local.ALL_VPC_CIDR
+  value = [for s in local.ALL_VPC_CIDR : "CIDR = ${s}"]
 }
