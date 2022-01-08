@@ -6,11 +6,11 @@ output "DEFAULT_VPC_ID" {
   value = var.DEFAULT_VPC_ID
 }
 
-output "PRIVATE_SUBNETS" {
+output "PRIVATE_SUBNETS_IDS" {
   value = aws_subnet.private-subnets.*.id
 }
 
-output "PUBLIC_SUBNETS" {
+output "PUBLIC_SUBNETS_IDS" {
   value = aws_subnet.public-subnets.*.id
 }
 
