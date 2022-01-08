@@ -11,23 +11,21 @@
 #  skip_final_snapshot  = true
 #}
 #
-#resource "aws_db_parameter_group" "pg" {
-#  name   = "mysql-${var.ENV}-pg"
-#  family = "mysql5.7"
-#}
-#
-#resource "aws_db_subnet_group" "subnet-group" {
-#  name       = "mysqldb-subnet-group-${var.ENV}"
-#  subnet_ids = data.terraform_remote_state.vpc.outputs.PRIVATE_SUBNETS_IDS
-#
-#  tags = {
-#    Name = "mysqldb-subnet-group-${var.ENV}"
-#  }
-#}
-
-output "PRIVATE_SUBNETS" {
-  value = data.terraform_remote_state.vpc.outputs.PRIVATE_SUBNETS_IDS
+resource "aws_db_parameter_group" "pg" {
+  name   = "mysql-${var.ENV}-pg"
+  family = "mysql5.7"
 }
+
+resource "aws_db_subnet_group" "subnet-group" {
+  name       = "mysqldb-subnet-group-${var.ENV}"
+  subnet_ids = data.terraform_remote_state.vpc.outputs.PRIVATE_SUBNETS_IDS
+
+  tags = {
+    Name = "mysqldb-subnet-group-${var.ENV}"
+  }
+}
+
+
 
 
 
