@@ -30,3 +30,7 @@ output "INTERNAL_HOSTEDZONE_ID" {
   value = var.INTERNAL_HOSTEDZONE_ID
 }
 
+output "ALL_VPC_CIDR" {
+  value = local.ALL_VPC_CIDR
+}
+

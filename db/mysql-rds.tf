@@ -14,6 +14,15 @@ resource "aws_db_instance" "mysql" {
   password             = local.rds_pass
   parameter_group_name = aws_db_parameter_group.pg.name
   skip_final_snapshot  = true
+  vpc_security_group_ids = []
+}
+
+resource "aws_db_security_group" "mysql" {
+  name = "mysql-${var.ENV}"
+
+  ingress {
+    cidr = data.terraform_remote_state.vpc.outputs.
+  }
 }
 
 resource "aws_db_parameter_group" "pg" {
