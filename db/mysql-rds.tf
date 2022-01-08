@@ -21,7 +21,7 @@ resource "aws_db_security_group" "mysql" {
   name = "mysql-${var.ENV}"
 
   ingress {
-    cidr = data.terraform_remote_state.vpc.outputs.
+    cidr = data.terraform_remote_state.vpc.outputs.ALL_VPC_CIDR
   }
 }
 
