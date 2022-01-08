@@ -45,7 +45,7 @@ sudo yum install mariadb -y
 curl -s -L -o /tmp/mysql.zip "https://github.com/roboshop-devops-project/mysql/archive/main.zip"
 cd /tmp
 unzip /tmp/mysql.zip
-mysql -h${aws_route53_record.mysql.fqdn} -u${local.rds_user} -p${local.rds_pass} <mysql-main/shipping.sql
+mysql -h${aws_db_instance.mysql.endpoint} -u${local.rds_user} -p${local.rds_pass} <mysql-main/shipping.sql
 EOF
   }
 }
