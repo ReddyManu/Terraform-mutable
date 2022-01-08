@@ -9,22 +9,20 @@
 #  parameter_group_name = aws_db_parameter_group.pg.name
 #  skip_final_snapshot  = true
 #}
-#
-#resource "aws_db_parameter_group" "pg" {
-#  name   = "mysql-${var.ENV}-pg"
-#  family = "mysql5.7"
-#}
-#
-#resource "aws_db_subnet_group" "subnet-group" {
-#  name       = "main"
-#  subnet_ids = [aws_subnet.frontend.id, aws_subnet.backend.id]
-#
-#  tags = {
-#    Name = "My DB subnet group"
-#  }
-#}
 
-output "PRIVATE_SUBNETS" {
-  value = data.terraform_remote_state.vpc.outputs.PRIVATE_SUBNETS_IDS
+resource "aws_db_parameter_group" "pg" {
+  name   = "mysql-${var.ENV}-pg"
+  family = "mysql5.7"
 }
+
+resource "aws_db_subnet_group" "subnet-group" {
+  name       = "mysqldb-subnet-group-${var.ENV}"
+  subnet_ids = data.terraform_remote_state.vpc.outputs.PRIVATE_SUBNETS_IDS
+
+  tags = {
+    Name = "mysqldb-subnet-group-${var.ENV}"
+  }
+}
+
+
 
