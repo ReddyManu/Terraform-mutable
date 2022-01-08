@@ -25,13 +25,13 @@ resource "aws_db_subnet_group" "subnet-group" {
   }
 }
 
-#resource "aws_route53_record" "mysql" {
-#  zone_id = aws_route53_zone.primary.zone_id
-#  name    = "www.example.com"
-#  type    = "A"
-#  ttl     = "300"
-#  records = [aws_eip.lb.public_ip]
-#}
+resource "aws_route53_record" "mysql" {
+  zone_id = data.terraform_remote_state.vpc.outputs.INTERNAL_HOSTEDZONE_ID
+  name    = "mysql-${var.ENV}"
+  type    = "CNAME"
+  ttl     = "300"
+  records = [aws_db_instance.mysql.endpoint]
+}
 
 
 
