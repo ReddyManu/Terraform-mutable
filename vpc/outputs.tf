@@ -26,3 +26,7 @@ output "DEFAULT_VPC_CIDR" {
   value = var.DEFAULT_VPC_CIDR
 }
 
+output "INTERNAL_HOSTEDZONE_ID" {
+  value = var.INTERNAL_HOSTEDZONE_ID
+}
+

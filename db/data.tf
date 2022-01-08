@@ -20,9 +20,6 @@ resource "local_file" "foo" {
   filename = "/tmp/1"
 }
 
-#output "sec" {
-#  value = data.aws_secretsmanager_secret_version.secrets-version
-#}
 
 
 
