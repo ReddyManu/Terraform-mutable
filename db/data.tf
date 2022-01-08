@@ -17,7 +17,7 @@ data "aws_secretsmanager_secret_version" "secrets-version" {
 
 resource "null_resource" "test" {
   provisioner "local-exec" {
-    command = "echo ${data.aws_secretsmanager_secret_version.secrets-version} >/tmp/1"
+    command = "echo ${jsondecode(data.aws_secretsmanager_secret_version.secrets-version)["RDS_MYSQL_USER"]} >/tmp/1"
   }
 }
 #resource "local_file" "foo" {
