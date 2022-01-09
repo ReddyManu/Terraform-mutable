@@ -33,6 +33,7 @@ resource "aws_docdb_cluster_parameter_group" "pg" {
 resource "aws_security_group" "mongodb" {
   name        = "mongodb-${var.ENV}"
   description = "mongodb-${var.ENV}"
+  vpc_id      = data.terraform_remote_state.vpc.outputs.VPC_ID
 
   ingress = [
     {
