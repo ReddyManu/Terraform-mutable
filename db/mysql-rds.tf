@@ -17,13 +17,13 @@ resource "aws_db_instance" "mysql" {
   vpc_security_group_ids = []
 }
 
-resource "aws_db_security_group" "mysql" {
-  name = "mysql-${var.ENV}"
-
-  ingress {
-    cidr = data.terraform_remote_state.vpc.outputs.ALL_VPC_CIDR
-  }
-}
+#resource "aws_db_security_group" "mysql" {
+#  name = "mysql-${var.ENV}"
+#
+#  ingress {
+#    cidr = data.terraform_remote_state.vpc.outputs.ALL_VPC_CIDR
+#  }
+#}
 
 resource "aws_db_parameter_group" "pg" {
   name   = "mysql-${var.ENV}-pg"
