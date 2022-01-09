@@ -37,7 +37,6 @@ resource "aws_security_group" "redis" {
       security_groups  = []
       self             = false
     }
-
   ]
 
   egress = [
@@ -58,5 +57,10 @@ resource "aws_security_group" "redis" {
     Name = "redis-${var.ENV}"
   }
 }
+
+output "redis" {
+  value = aws_elasticache_cluster.redis
+}
+
 
 
