@@ -8,17 +8,18 @@ output "all_cidr" {
 }
 
 resource "aws_db_instance" "mysql" {
-  allocated_storage    = 10
-  identifier           = "mysql-${var.ENV}"
-  engine               = "mysql"
-  engine_version       = "5.7"
-  instance_class       = "db.t2.micro"
-  name                 = "dummy"
-  username             = local.rds_user
-  password             = local.rds_pass
-  parameter_group_name = aws_db_parameter_group.pg.name
-  skip_final_snapshot  = true
+  allocated_storage      = 10
+  identifier             = "mysql-${var.ENV}"
+  engine                 = "mysql"
+  engine_version         = "5.7"
+  instance_class         = "db.t2.micro"
+  name                   = "dummy"
+  username               = local.rds_user
+  password               = local.rds_pass
+  parameter_group_name   = aws_db_parameter_group.pg.name
+  skip_final_snapshot    = true
   vpc_security_group_ids = [aws_security_group.mysql.id]
+  db_subnet_group_name   = aws_db_subnet_group.subnet-group.name
 }
 
 resource "aws_security_group" "mysql" {
