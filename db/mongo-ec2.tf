@@ -82,7 +82,7 @@ resource "null_resource" "mongodb-setup" {
       "sudo yum install python3-pip -y",
       "sudo pip3 install pip --upgrade",
       "sudo pip3 install ansible",
-      "ansible-pull -U https://github.com/ReddyManu/Ansible.git roboshop-pull.yml -e ENV=${var.ENV}"
+      "ansible-pull -U https://github.com/ReddyManu/Ansible.git roboshop-pull.yml -e ENV=${var.ENV} -e COMPONENT=mongodb"
     ]
   }
 }
