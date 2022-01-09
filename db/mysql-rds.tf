@@ -1,6 +1,12 @@
 locals {
   rds_user = jsondecode(data.aws_secretsmanager_secret_version.secrets-version.secret_string)["RDS_MYSQL_USER"]
   rds_pass = jsondecode(data.aws_secretsmanager_secret_version.secrets-version.secret_string)["RDS_MYSQL_PASS"]
+  DEFAULT_VPC_CIDR = split(",", data.terraform_remote_state.vpc.outputs.DEFAULT_VPC_CIDR)
+  ALL_CIDR = concat(data.terraform_remote_state.vpc.outputs.ALL_VPC_CIDR, local.DEFAULT_VPC_CIDR)
+}
+
+output "all_cidr" {
+  value = local.ALL_CIDR
 }
 
 resource "aws_db_instance" "mysql" {
@@ -17,13 +23,17 @@ resource "aws_db_instance" "mysql" {
   vpc_security_group_ids = []
 }
 
-resource "aws_db_security_group" "mysql" {
-  name = "mysql-${var.ENV}"
+#resource "aws_db_security_group" "mysql" {
+#  name = "mysql-${var.ENV}"
+#
+#  dynamic "ingress" {
+#    for_each =
+#    content {
+#      cidr = ingress.value
+#    }
+#  }
+#}
 
-  ingress {
-    cidr = data.terraform_remote_state.vpc.outputs.ALL_VPC_CIDR
-  }
-}
 
 resource "aws_db_parameter_group" "pg" {
   name   = "mysql-${var.ENV}-pg"
@@ -47,18 +57,18 @@ resource "aws_route53_record" "mysql" {
   records = [aws_db_instance.mysql.address]
 }
 
-resource "null_resource" "schema-apply" {
-  //depends_on = [aws_route53_record.mysql]
-  provisioner "local-exec" {
-    command=<<EOF
-sudo yum install mariadb -y
-curl -s -L -o /tmp/mysql.zip "https://github.com/roboshop-devops-project/mysql/archive/main.zip"
-cd /tmp
-unzip -o /tmp/mysql.zip
-mysql -h${aws_db_instance.mysql.address} -u${local.rds_user} -p${local.rds_pass} <mysql-main/shipping.sql
-EOF
-  }
-}
+#resource "null_resource" "schema-apply" {
+#  //depends_on = [aws_route53_record.mysql]
+#  provisioner "local-exec" {
+#    command=<<EOF
+#sudo yum install mariadb -y
+#curl -s -L -o /tmp/mysql.zip "https://github.com/roboshop-devops-project/mysql/archive/main.zip"
+#cd /tmp
+#unzip -o /tmp/mysql.zip
+#mysql -h${aws_db_instance.mysql.address} -u${local.rds_user} -p${local.rds_pass} <mysql-main/shipping.sql
+#EOF
+#  }
+#}
 
 
 
