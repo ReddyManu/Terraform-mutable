@@ -14,6 +14,17 @@ resource "aws_security_group" "mongodb" {
       prefix_list_ids  = []
       security_groups  = []
       self             = false
+    },
+    {
+      description      = "SSH"
+      from_port        = 22
+      to_port          = 22
+      protocol         = "tcp"
+      cidr_blocks      = local.ALL_CIDR
+      ipv6_cidr_blocks = []
+      prefix_list_ids  = []
+      security_groups  = []
+      self             = false
     }
   ]
 
@@ -40,6 +51,7 @@ resource "aws_instance" "mongodb" {
   ami                    = data.aws_ami.ami.id
   instance_type          = var.MONGODB_INSTANCE_TYPE
   vpc_security_group_ids = [aws_security_group.mongodb.id]
+  subnet_id              = data.terraform_remote_state.vpc.outputs.PRIVATE_SUBNETS_IDS[0]
   tags = {
     Name = "mongodb-${var.ENV}"
   }
