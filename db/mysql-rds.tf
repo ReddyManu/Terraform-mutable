@@ -40,9 +40,9 @@ resource "aws_security_group" "mysql" {
 
   ingress = [
     {
-      description      = "TLS from VPC"
-      from_port        = 22
-      to_port          = 22
+      description      = "MYSQL"
+      from_port        = 3306
+      to_port          = 3306
       protocol         = "tcp"
       cidr_blocks      = local.ALL_CIDR
       ipv6_cidr_blocks = []
