@@ -21,17 +21,6 @@ resource "aws_db_instance" "mysql" {
   vpc_security_group_ids = [aws_security_group.mysql.id]
 }
 
-#resource "aws_db_security_group" "mysql" {
-#  name = "mysql-${var.ENV}"
-#
-#  dynamic "ingress" {
-#    for_each = local.ALL_CIDR
-#    content {
-#      cidr = ingress.value
-#    }
-#  }
-#}
-
 resource "aws_security_group" "mysql" {
   name        = "mysql-${var.ENV}"
   description = "mysql-${var.ENV}"
