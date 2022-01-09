@@ -40,7 +40,6 @@ resource "aws_instance" "mongodb" {
   ami                    = data.aws_ami.ami.id
   instance_type          = var.MONGODB_INSTANCE_TYPE
   vpc_security_group_ids = [aws_security_group.mongodb.id]
-  wait_for_fulfillment   = true
   tags = {
     Name = "mongodb-${var.ENV}"
   }
@@ -54,9 +53,9 @@ resource "aws_route53_record" "mongodb" {
   records = [aws_instance.mongodb.private_ip]
 }
 
-resource "null_resource" "mondodb-setup" {
+resource "null_resource" "mongodb-setup" {
   provisioner "remote-exec" {
-    connection = {
+    connection {
       host     = aws_instance.mongodb.private_ip
       user     = local.ssh_user
       password = local.ssh_pass
