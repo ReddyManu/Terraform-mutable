@@ -20,19 +20,19 @@ resource "aws_db_instance" "mysql" {
   password             = local.rds_pass
   parameter_group_name = aws_db_parameter_group.pg.name
   skip_final_snapshot  = true
-  vpc_security_group_ids = []
+  vpc_security_group_ids = [aws_db_security_group.mysql.id]
 }
 
-#resource "aws_db_security_group" "mysql" {
-#  name = "mysql-${var.ENV}"
-#
-#  dynamic "ingress" {
-#    for_each =
-#    content {
-#      cidr = ingress.value
-#    }
-#  }
-#}
+resource "aws_db_security_group" "mysql" {
+  name = "mysql-${var.ENV}"
+
+  dynamic "ingress" {
+    for_each = local.ALL_CIDR
+    content {
+      cidr = ingress.value
+    }
+  }
+}
 
 
 resource "aws_db_parameter_group" "pg" {
