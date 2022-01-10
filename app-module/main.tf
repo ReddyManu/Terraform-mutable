@@ -15,8 +15,18 @@ resource "aws_spot_instance_request" "spot" {
 
 locals {
   INSTANCE_IDS = concat(aws_instance.od.*.id, aws_spot_instance_request.spot.*.spot_instance_id)
+  tags = {
+    Name = "${var.COMPONENT}-${var.ENV}"
+  }
 }
 
 output "INSTANCE_IDS" {
   value = local.INSTANCE_IDS
+}
+
+resource "aws_ec2_tag" "ec2-name-tag" {
+  count       = length(local.INSTANCE_IDS)
+  key         = "Name"
+  resource_id = element(local.INSTANCE_IDS, count.index)
+  value       = local.tags["Name"]
 }
