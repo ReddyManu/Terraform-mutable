@@ -19,4 +19,12 @@ data "aws_ami" "ami" {
   owners      = ["self"]
 }
 
+data "aws_secretsmanager_secret" "secrets" {
+  name = var.ENV
+}
+
+data "aws_secretsmanager_secret_version" "secrets-version" {
+  secret_id = data.aws_secretsmanager_secret.secrets.id
+}
+
 
