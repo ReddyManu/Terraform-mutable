@@ -32,7 +32,7 @@ resource "aws_lb_listener_rule" "private" {
 
   condition {
     host_header {
-      values = ["${var.COMPONENT}-${var.ENV}-roboshop.internal"]
+      values = ["${var.COMPONENT}-${var.ENV}.roboshop.internal"]
     }
   }
 }
@@ -49,7 +49,7 @@ resource "aws_lb_listener_rule" "public" {
 
   condition {
     host_header {
-      values = ["${var.COMPONENT}-${var.ENV}-roboshop.internal"]
+      values = ["${var.COMPONENT}-${var.ENV}.roboshop.internal"]
     }
   }
 }
