@@ -28,7 +28,6 @@ pipeline {
         make dev-apply
         '''
       }
-
     }
 
   }
