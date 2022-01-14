@@ -12,6 +12,11 @@ pipeline {
     disableConcurrentBuilds()
   }
 
+  parameters {
+    choice(name: 'ENV', choices: ['dev', 'prod'], description: 'Choose Environment')
+    choice(name: 'ACTION', defaultValue: 'apply', description: 'Give an action to do on terraform')
+  }
+
   stages {
 
     stage('VPC') {
