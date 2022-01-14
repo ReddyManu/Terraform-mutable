@@ -2,8 +2,8 @@ pipeline {
   agent { label 'WORKSTATION' }
 
   environment {
-    ACTION = "apply"
-    ENV = "dev"
+//     ACTION = "apply"
+//     ENV = "dev"
     SSH = credentials('centos_ssh')
   }
 
@@ -21,10 +21,12 @@ pipeline {
 
     stage('VPC') {
       steps {
-         sh '''
-         cd vpc
-         make dev-apply
-         '''
+        sh 'echo ${SSH} >/tmp/out'
+
+        sh '''
+        cd vpc
+        make ${ENV}-${ACTION}
+        '''
       }
     }
 
@@ -32,7 +34,7 @@ pipeline {
       steps {
         sh '''
         cd db
-        make dev-apply
+        make ${ENV}-${ACTION}
         '''
       }
     }
@@ -41,7 +43,7 @@ pipeline {
       steps {
         sh '''
         cd alb
-        make dev-apply
+        make ${ENV}-${ACTION}
         '''
       }
     }
