@@ -7,6 +7,11 @@ pipeline {
     SSH = credentials('centos_ssh')
   }
 
+  options {
+    ansiColor('xterm')
+    disableConcurrentBuilds()
+  }
+
   stages {
 
     stage('VPC') {
