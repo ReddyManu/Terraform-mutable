@@ -1,6 +1,12 @@
 pipeline {
   agent { label 'WORKSTATION' }
 
+  environment {
+    ACTION = "apply"
+    ENV = "dev"
+    SSH = credentials('centos_ssh')
+  }
+
   stages {
 
     stage('VPC') {
